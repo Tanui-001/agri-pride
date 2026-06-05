@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AgriPride Cooperative Lending - GUARD Safety Rails">
+    <title>AgriPride - Cooperative Lending</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #2f855a;
+            --primary-dark: #276749;
+            --primary-light: #9ae6b4;
+            --secondary: #d69e2e;
+            --danger: #e53e3e;
+            --info: #3182ce;
+            --success: #38a169;
+            --bg: #f7fafc;
+            --card: #ffffff;
+            --text: #2d3748;
+            --text-light: #718096;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Login Page */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2f855a 0%, #276749 100%);
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 36px;
+        }
+
+        .login-header h1 { font-size: 28px; margin-bottom: 8px; color: var(--text); }
+        .login-header p { color: var(--text-light); font-size: 14px; }
+
+        /* Tabs */
+        .login-tabs {
+            display: flex;
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            font-size: 13px; 
+            color: var(--text);
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; 
+            padding: 12px 16px; 
+            border: 2px solid var(--border);
+            border-radius: 10px; 
+            font-size: 14px; 
+            transition: all 0.3s; 
+            font-family: inherit;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; 
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(47, 133, 90, 0.1);
+        }
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: var(--text-light);
+            font-size: 12px;
+        }
+        .form-group .error {
+            color: var(--danger);
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        .form-group .error.show {
+            display: block;
+        }
+
+        .btn {
+            width: 100%; 
+            padding: 14px; 
+            background: var(--primary); 
+            color: white;
+            border: none; 
+            border-radius: 10px; 
+            font-size: 15px; 
+            font-weight: 600;
+            cursor: pointer; 
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn:hover { 
+            background: var(--primary-dark); 
+            transform: translateY(-2px); 
+            box-shadow: 0 5px 15px rgba(47, 133, 90, 0.3); 
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-secondary { background: var(--info); }
+        .btn-secondary:hover { background: #2c5282; }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text);
+        }
+        .btn-outline:hover {
+            background: var(--bg);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .alert {
+            padding: 14px 18px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+            display: none; 
+            align-items: center; 
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+        }
+        .alert.show { display: flex; }
+        .alert-success { 
+            background: #c6f6d5; 
+            color: #22543d; 
+            border: 1px solid #9ae6b4; 
+        }
+        .alert-danger { 
+            background: #fed7d7; 
+            color: #742a2a; 
+            border: 1px solid #feb2b2; 
+        }
+        .alert-info {
+            background: #bee3f8;
+            color: #2a4365;
+            border: 1px solid #90cdf4;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden { display: none !important; }
+
+        /* OTP Section */
+        .otp-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .otp-section h3 {
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        .otp-section p {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .otp-inputs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .otp-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(47, 133, 90, 0.1);
+            outline: none;
+        }
+        .resend-otp {
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        .resend-otp button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            font-size: 14px;
+        }
+        .resend-otp button:disabled {
+            color: var(--text-light);
+            cursor: not-allowed;
+        }
+        .countdown {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* Main App Layout */
+        .app-container { display: none; min-height: 100vh; }
+        .app-container.active { display: block; }
+
+        .navbar {
+            background: white; 
+            border-bottom: 1px solid var(--border); 
+            padding: 15px 30px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .nav-brand-icon {
+            width: 40px; 
+            height: 40px; 
+            background: var(--primary); 
+            border-radius: 10px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            font-size: 20px;
+        }
+        .nav-brand-text h1 { font-size: 18px; font-weight: 700; }
+        .nav-brand-text p { font-size: 12px; color: var(--text-light); }
+        .nav-user { display: flex; align-items: center; gap: 15px; }
+        .user-info { text-align: right; }
+        .user-name { font-weight: 600; font-size: 14px; }
+        .user-role { font-size: 12px; color: var(--text-light); }
+        .user-avatar {
+            width: 40px; 
+            height: 40px; 
+            background: var(--primary-light); 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: var(--primary-dark); 
+            font-weight: 700;
+        }
+        .logout-btn {
+            padding: 8px 16px; 
+            background: var(--danger); 
+            color: white; 
+            border: none;
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 13px; 
+            font-weight: 600; 
+            transition: all 0.2s;
+        }
+        .logout-btn:hover { background: #c53030; }
+
+        .content { padding: 30px; max-width: 1200px; margin: 0 auto; }
+        .page-header { margin-bottom: 30px; }
+        .page-header h2 { font-size: 28px; margin-bottom: 5px; }
+        .page-header p { color: var(--text-light); }
+
+        .card { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 24px; 
+            border: 2px solid var(--border); 
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .card-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            padding-bottom: 15px; 
+            border-bottom: 2px solid var(--border); 
+        }
+        .card-title { font-size: 18px; font-weight: 600; }
+
+        .stats-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 20px; 
+            margin-bottom: 30px; 
+        }
+        .stat-card { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 24px; 
+            border: 2px solid var(--border); 
+            transition: all 0.3s;
+        }
+        .stat-card:hover { 
+            border-color: var(--primary-light); 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .stat-icon { 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 10px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 24px; 
+            margin-bottom: 16px; 
+        }
+        .stat-value { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+        .stat-label { font-size: 14px; color: var(--text-light); }
+
+        .form-section { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 30px; 
+            border: 2px solid var(--border); 
+        }
+        .form-row { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 20px; 
+        }
+        @media (max-width: 768px) { 
+            .form-row { grid-template-columns: 1fr; }
+            .navbar { padding: 15px 20px; }
+            .content { padding: 20px; }
+        }
+
+        .admin-layout { 
+            display: grid; 
+            grid-template-columns: 260px 1fr; 
+            gap: 20px; 
+        }
+        @media (max-width: 968px) { 
+            .admin-layout { grid-template-columns: 1fr; } 
+        }
+
+        .admin-sidebar { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 20px; 
+            border: 2px solid var(--border); 
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+        }
+        .admin-nav-item {
+            padding: 12px 16px; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            border-radius: 8px;
+            cursor: pointer; 
+            margin-bottom: 5px; 
+            transition: all 0.2s; 
+            color: var(--text-light);
+        }
+        .admin-nav-item:hover { 
+            background: var(--bg); 
+            color: var(--primary); 
+        }
+        .admin-nav-item.active { 
+            background: var(--primary); 
+            color: white; 
+        }
+        .admin-nav-item i { width: 20px; text-align: center; }
+
+        .console {
+            background: #1a202c; 
+            color: #48bb78; 
+            font-family: 'Courier New', monospace;
+            border-radius: 10px; 
+            padding: 20px; 
+            max-height: 500px; 
+            overflow-y: auto; 
+            font-size: 13px; 
+            line-height: 1.6;
+        }
+        .console-line { 
+            margin-bottom: 5px; 
+            padding: 5px; 
+            border-left: 3px solid #4a5568; 
+            padding-left: 10px; 
+        }
+        .console-line.rank { border-left-color: #ed8936; color: #fbd38d; }
+        .console-line.trail { border-left-color: #4299e1; color: #90cdf4; }
+        .console-line.compliance { border-left-color: #48bb78; color: #9ae6b4; }
+        .console-line.danger { border-left-color: #f56565; color: #feb2b2; }
+
+        .badge { 
+            display: inline-block; 
+            padding: 3px 8px; 
+            border-radius: 5px; 
+            font-size: 10px; 
+            font-weight: 700; 
+            margin-right: 5px; 
+        }
+        .badge-dpa { background: #064e3b; color: #6ee7b7; }
+        .badge-aws { background: #1e3a8a; color: #93c5fd; }
+        .badge-rank { background: #7c2d12; color: #fdba74; }
+
+        .activity-feed { max-height: 400px; overflow-y: auto; }
+        .activity-item { 
+            display: flex; 
+            gap: 12px; 
+            padding: 12px 0; 
+            border-bottom: 1px solid var(--border); 
+        }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-icon { 
+            width: 32px; 
+            height: 32px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 14px; 
+            flex-shrink: 0; 
+        }
+        .activity-icon.success { background: #c6f6d5; color: var(--success); }
+        .activity-icon.info { background: #bee3f8; color: var(--info); }
+        .activity-icon.warning { background: #fef5e7; color: var(--secondary); }
+        .activity-content { flex: 1; }
+        .activity-title { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+        .activity-meta { font-size: 12px; color: var(--text-light); }
+
+        .chart-container { position: relative; height: 300px; margin-top: 20px; }
+        .status-badge { 
+            padding: 6px 12px; 
+            border-radius: 20px; 
+            font-size: 12px; 
+            font-weight: 600; 
+            display: inline-block; 
+        }
+        .status-pending { background: #fef5e7; color: #744210; }
+        .status-approved { background: #c6f6d5; color: #22543d; }
+        .status-rejected { background: #fed7d7; color: #742a2a; }
+        .status-review { background: #e6fffa; color: #234e52; }
+        
+        .alert-box { 
+            padding: 15px 20px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 12px; 
+        }
+        .alert-box-info { 
+            background: #bee3f8; 
+            color: #2a4365; 
+            border-left: 4px solid var(--info); 
+        }
+        .alert-box-success { 
+            background: #c6f6d5; 
+            color: #22543d; 
+            border-left: 4px solid var(--success); 
+        }
+        .alert-box-warning {
+            background: #fef5e7;
+            color: #744210;
+            border-left: 4px solid var(--secondary);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Security Badge */
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: #e6fffa;
+            color: #234e52;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .security-badge i {
+            color: var(--success);
+        }
+    </style>
+</head>
+<body>
+    <!-- Login / Sign Up Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="login-logo"><i class="fas fa-leaf"></i></div>
+                <h1>AgriPride</h1>
+                <p>Cooperative Lending Platform</p>
+                <div class="security-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secured by GUARD Safety Rails</span>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchTab('signin')">Sign In</button>
+                <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- Alerts -->
+            <div id="loginAlert" class="alert"></div>
+
+            <!-- Sign In Form -->
+            <form id="signInForm" onsubmit="handleSignIn(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="signInEmail" placeholder="you@example.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="signInPassword" placeholder="••••••••" required autocomplete="current-password">
+                </div>
+                <div class="form-group">
+                    <label>Account Type</label>
+                    <select id="signInRole" required>
+                        <option value="user">Member</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                    <small>Admin accounts require phone verification</small>
+                </div>
+                <button type="submit" class="btn" id="signInBtn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+
+            <!-- OTP Verification Section (Admin Only) -->
+            <div id="otpSection" class="otp-section hidden">
+                <h3><i class="fas fa-mobile-alt"></i> Two-Factor Authentication</h3>
+                <p>An OTP has been sent to <strong id="otpPhoneDisplay">your phone</strong></p>
+                
+                <div class="otp-inputs">
+                    <input type="tel" class="otp-input" maxlength="1" data-index="0" required>
+                    <input type="tel" class="otp-input" maxlength="1" data-index="1" required>
+                    <input type="tel" class="otp-input" maxlength="1" data-index="2" required>
+                    <input type="tel" class="otp-input" maxlength="1" data-index="3" required>
+                    <input type="tel" class="otp-input" maxlength="1" data-index="4" required>
+                    <input type="tel" class="otp-input" maxlength="1" data-index="5" required>
+                </div>
+                
+                <button class="btn" onclick="verifyOTP()" id="verifyOtpBtn">
+                    <i class="fas fa-check-circle"></i> Verify & Continue
+                </button>
+                
+                <div class="resend-otp">
+                    Didn't receive code? 
+                    <button onclick="resendOTP()" id="resendBtn">Resend</button>
+                    <span id="countdown" class="countdown hidden">(30s)</span>
+                </div>
+                
+                <button class="btn btn-outline" onclick="cancelOTP()" style="margin-top: 15px;">
+                    <i class="fas fa-arrow-left"></i> Back to Sign In
+                </button>
+            </div>
+
+            <!-- Sign Up Form -->
+            <form id="signUpForm" class="hidden" onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="signUpName" placeholder="John Doe" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number *</label>
+                    <input type="tel" id="signUpPhone" placeholder="+254712345678" required autocomplete="tel">
+                    <small>Format: +2547XXXXXXXX (Required for admin accounts)</small>
+                </div>
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="signUpEmail" placeholder="you@example.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label>Password *</label>
+                    <input type="password" id="signUpPassword" placeholder="Min 8 characters" minlength="8" required autocomplete="new-password">
+                    <small>Must be at least 8 characters</small>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password *</label>
+                    <input type="password" id="signUpConfirmPassword" placeholder="Re-enter password" required autocomplete="new-password">
+                    <div class="error" id="passwordMatchError">Passwords do not match</div>
+                </div>
+                <div class="form-group">
+                    <label>Account Type *</label>
+                    <select id="signUpRole" required onchange="checkAdminPhone()">
+                        <option value="user">Member</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                    <small id="adminNotice" class="hidden" style="color: var(--danger);">
+                        <i class="fas fa-exclamation-triangle"></i> Admin accounts require phone verification and approval
+                    </small>
+                </div>
+                <button type="submit" class="btn" id="signUpBtn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Portal -->
+    <div class="app-container" id="userPortal">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <div class="nav-brand-icon"><i class="fas fa-leaf"></i></div>
+                <div class="nav-brand-text">
+                    <h1>AgriPride</h1>
+                    <p>Member Portal</p>
+                </div>
+            </div>
+            <div class="nav-user">
+                <div class="user-info">
+                    <div class="user-name" id="userName">User</div>
+                    <div class="user-role">Member</div>
+                </div>
+                <div class="user-avatar" id="userAvatar">U</div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <div class="content">
+            <div class="page-header">
+                <h2>Loan Application</h2>
+                <p>Apply for agricultural financing</p>
+            </div>
+
+            <div id="applicationStatus"></div>
+
+            <div class="form-section">
+                <form id="loanApplicationForm" onsubmit="submitLoanApplication(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="appName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="appPhone" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email Address *</label>
+                            <input type="email" id="appEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ID Number *</label>
+                            <input type="text" id="appIdNumber" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>District/Location *</label>
+                            <input type="text" id="appDistrict" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Occupation *</label>
+                            <input type="text" id="appOccupation" placeholder="e.g., Maize farmer" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Age *</label>
+                            <input type="number" id="appAge" min="18" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Dependents</label>
+                            <input type="number" id="appDependents" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Dependents Under 5 Years</label>
+                            <input type="number" id="appDependentsUnder5" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Harvest Months</label>
+                            <input type="text" id="appHarvestMonths" placeholder="e.g., October, November">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Loan Amount (KES) *</label>
+                            <input type="number" id="appAmount" min="1000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Loan Purpose *</label>
+                            <select id="appPurpose" required>
+                                <option value="">Select purpose...</option>
+                                <option value="seeds">Seeds & Fertilizer</option>
+                                <option value="equipment">Farm Equipment</option>
+                                <option value="school">School Fees</option>
+                                <option value="livestock">Livestock</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Information</label>
+                        <textarea id="appAdditional" placeholder="Any additional details about your application..."></textarea>
+                    </div>
+
+                    <div class="alert-box alert-box-info">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Processing Information:</strong><br>
+                            Your application will be reviewed by our GUARD Safety Rails system. 
+                            Loans ≤ KES 15,000 may be auto-approved. Larger amounts require human review.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn" id="submitAppBtn">
+                        <i class="fas fa-paper-plane"></i> Submit Application
+                    </button>
+                </form>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-header">
+                    <h3 class="card-title">My Applications</h3>
+                </div>
+                <div id="applicationHistory">
+                    <p style="color: var(--text-light); text-align: center; padding: 20px;">No applications yet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Portal -->
+    <div class="app-container" id="adminPortal">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <div class="nav-brand-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="nav-brand-text">
+                    <h1>AgriPride Admin</h1>
+                    <p>GUARD Safety Rails System</p>
+                </div>
+            </div>
+            <div class="nav-user">
+                <div class="user-info">
+                    <div class="user-name" id="adminName">Admin</div>
+                    <div class="user-role">Administrator</div>
+                </div>
+                <div class="user-avatar" id="adminAvatar">AD</div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <div class="content">
+            <div class="page-header">
+                <h2>GUARD Safety Rails Dashboard</h2>
+                <p>Agent Pride Prototype - Administrative Control Panel</p>
+            </div>
+
+            <div class="admin-layout">
+                <div class="admin-sidebar">
+                    <div class="admin-nav-item active" onclick="showAdminSection('dashboard', this)">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </div>
+                    <div class="admin-nav-item" onclick="showAdminSection('applications', this)">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Applications</span>
+                    </div>
+                    <div class="admin-nav-item" onclick="showAdminSection('scout', this)">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Scout Agent</span>
+                    </div>
+                    <div class="admin-nav-item" onclick="showAdminSection('guardian', this)">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Guardian Agent</span>
+                    </div>
+                    <div class="admin-nav-item" onclick="showAdminSection('hunter', this)">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Hunter Agent</span>
+                    </div>
+                    <div class="admin-nav-item" onclick="showAdminSection('cycle', this)">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>CYCLE Engine</span>
+                    </div>
+                    <div class="admin-nav-item" onclick="showAdminSection('audit', this)">
+                        <i class="fas fa-search"></i>
+                        <span>Audit Trail</span>
+                    </div>
+                </div>
+
+                <div class="admin-content">
+                    <div id="adminDashboard" class="admin-section">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #c6f6d5; color: var(--success);">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="stat-value" id="statTotalApps">0</div>
+                                <div class="stat-label">Total Applications</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #bee3f8; color: var(--info);">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-value" id="statPending">0</div>
+                                <div class="stat-label">Pending Review</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #9ae6b4; color: var(--success);">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-value" id="statApproved">0</div>
+                                <div class="stat-label">Approved</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #fbd38d; color: var(--secondary);">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="stat-value" id="statDisbursed">KES 0</div>
+                                <div class="stat-label">Total Disbursed</div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Loan Pipeline</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="pipelineChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top: 20px;">
+                            <div class="card-header">
+                                <h3 class="card-title">Recent Activity</h3>
+                            </div>
+                            <div class="activity-feed" id="adminActivityFeed"></div>
+                        </div>
+                    </div>
+
+                    <div id="adminApplications" class="admin-section hidden">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">All Loan Applications</h3>
+                            </div>
+                            <div id="allApplications"></div>
+                        </div>
+                    </div>
+
+                    <div id="adminScout" class="admin-section hidden">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Scout Agent - Financial Literacy Coach</h3>
+                                <span class="status-badge status-review">Active</span>
+                            </div>
+                            <div class="alert-box alert-box-info">
+                                <i class="fas fa-info-circle"></i>
+                                <div>
+                                    <strong>RANK Calibration:</strong><br>
+                                    R: Educate on harvest-cycle planning<br>
+                                    A: Max 3 SMS/day; never recommend loans<br>
+                                    N: Alert Guardian if 'loan shark' mentioned<br>
+                                    K: SMS *#700# to pause messages
+                                </div>
+                            </div>
+                            <div class="console" id="scoutConsole">
+                                <div class="console-line compliance">
+                                    <span class="badge badge-dpa">DPA 2022</span>
+                                    <span class="badge badge-aws">AWS Africa</span>
+                                    Scout Agent initialized
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="adminGuardian" class="admin-section hidden">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Guardian Agent - Loan Triage</h3>
+                                <span class="status-badge status-approved">Auto-Approve ≤KES 15,000</span>
+                            </div>
+                            <div class="alert-box alert-box-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <div>
+                                    <strong>RANK Calibration:</strong><br>
+                                    R: Tie to loan screening only<br>
+                                    A: Approve ≤KES 15,000; deny only with 3+ risk flags<br>
+                                    N: Escalate if (a) amount>KES 15K (b) 2+<5yrs (c) mentions debt collector<br>
+                                    K: *#733# human takeover
+                                </div>
+                            </div>
+                            <div class="console" id="guardianConsole">
+                                <div class="console-line compliance">
+                                    <span class="badge badge-dpa">DPA 2022</span>
+                                    Guardian Agent initialized. Raw PII never leaves Kenya.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="adminHunter" class="admin-section hidden">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Hunter Agent - Human-in-Loop Coordinator</h3>
+                                <span class="status-badge status-pending">15-min SLA</span>
+                            </div>
+                            <div class="alert-box alert-box-info">
+                                <i class="fas fa-info-circle"></i>
+                                <div>
+                                    <strong>RANK Calibration:</strong><br>
+                                    R: Coordinate human loan officers<br>
+                                    A: NEVER approve/deny - prep briefings only<br>
+                                    N: Alert officer within 15 mins for high-priority<br>
+                                    K: Full system pause *#799#
+                                </div>
+                            </div>
+                            <div class="console" id="hunterConsole">
+                                <div class="console-line trail">
+                                    <span class="badge badge-rank">TRAIL</span>
+                                    Hunter Agent ready. Officer matching enabled.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="adminCycle" class="admin-section hidden">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">CYCLE Self-Improvement Engine</h3>
+                                <button class="btn btn-secondary" onclick="triggerCycle()" style="width: auto; padding: 10px 20px;">
+                                    <i class="fas fa-sync-alt"></i> Run Analysis
+                                </button>
+                            </div>
+                            <div id="cycleOutput"></div>
+                        </div>
+                    </div>
+
+                    <div id="adminAudit" class="admin-section hidden">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Complete Audit Trail</h3>
+                            </div>
+                            <div class="console" id="auditConsole" style="max-height: 600px;">
+                                <div class="console-line compliance">
+                                    <span class="badge badge-dpa">DPA 2022</span>
+                                    Audit trail initialized
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATABASE & STATE MANAGEMENT ====================
+        const DB = {
+            getUsers: () => JSON.parse(localStorage.getItem('agripride_users') || '[]'),
+            saveUsers: (users) => localStorage.setItem('agripride_users', JSON.stringify(users)),
+            getApps: () => JSON.parse(localStorage.getItem('agripride_applications') || '[]'),
+            saveApps: (apps) => localStorage.setItem('agripride_applications', JSON.stringify(apps)),
+            getLogs: () => JSON.parse(localStorage.getItem('agripride_logs') || '[]'),
+            saveLogs: (logs) => localStorage.setItem('agripride_logs', JSON.stringify(logs)),
+            getOTP: () => JSON.parse(localStorage.getItem('agripride_otp') || 'null'),
+            saveOTP: (otp) => localStorage.setItem('agripride_otp', JSON.stringify(otp))
+        };
+
+        // Initialize Admin Account (Production)
+        (function initializeSystem() {
+            let users = DB.getUsers();
+            if (!users.find(u => u.email === 'admin@agripride.co.ke')) {
+                users.push({
+                    id: 'admin_001',
+                    name: 'System Administrator',
+                    email: 'admin@agripride.co.ke',
+                    phone: '+254700000000',
+                    password: 'Admin@2024Secure!',
+                    role: 'admin',
+                    verified: true,
+                    createdAt: new Date().toISOString()
+                });
+                DB.saveUsers(users);
+                console.log('[SYSTEM] Default admin account created');
+            }
+        })();
+
+        // Application State
+        let state = {
+            currentUser: null,
+            pendingOTP: null,
+            applications: DB.getApps(),
+            auditLogs: DB.getLogs()
+        };
+
+        // ==================== AUTHENTICATION FUNCTIONS ====================
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('loginAlert').classList.remove('show');
+            document.getElementById('otpSection').classList.add('hidden');
+            document.getElementById('signInForm').classList.remove('hidden');
+            
+            if (tab === 'signin') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('signInForm').classList.remove('hidden');
+                document.getElementById('signUpForm').classList.add('hidden');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('signInForm').classList.add('hidden');
+                document.getElementById('signUpForm').classList.remove('hidden');
+            }
+        }
+
+        function showAlert(message, type) {
+            const alert = document.getElementById('loginAlert');
+            alert.className = `alert show alert-${type}`;
+            alert.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> <div>${message}</div>`;
+            setTimeout(() => alert.classList.remove('show'), 5000);
+        }
+
+        function checkAdminPhone() {
+            const role = document.getElementById('signUpRole').value;
+            const notice = document.getElementById('adminNotice');
+            if (role === 'admin') {
+                notice.classList.remove('hidden');
+            } else {
+                notice.classList.add('hidden');
+            }
+        }
+
+        // Sign Up Handler
+        function handleSignUp(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('signUpName').value.trim();
+            const phone = document.getElementById('signUpPhone').value.trim();
+            const email = document.getElementById('signUpEmail').value.trim().toLowerCase();
+            const password = document.getElementById('signUpPassword').value;
+            const confirmPassword = document.getElementById('signUpConfirmPassword').value;
+            const role = document.getElementById('signUpRole').value;
+
+            // Validation
+            if (password !== confirmPassword) {
+                document.getElementById('passwordMatchError').classList.add('show');
+                return;
+            }
+            document.getElementById('passwordMatchError').classList.remove('show');
+
+            if (password.length < 8) {
+                showAlert('Password must be at least 8 characters long', 'danger');
+                return;
+            }
+
+            // Phone validation for admin
+            if (role === 'admin' && !phone.startsWith('+254')) {
+                showAlert('Admin accounts require a valid Kenyan phone number (+254...)', 'danger');
+                return;
+            }
+
+            let users = DB.getUsers();
+            
+            // Check if email exists
+            if (users.find(u => u.email === email)) {
+                showAlert('An account with this email already exists', 'danger');
+                return;
+            }
+
+            // Create user
+            const newUser = {
+                id: 'user_' + Date.now(),
+                name,
+                email,
+                phone: role === 'admin' ? phone : (phone || ''),
+                password, // In production, this should be hashed
+                role,
+                verified: role !== 'admin', // Admin requires verification
+                createdAt: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            DB.saveUsers(users);
+
+            showAlert(`Account created successfully! ${role === 'admin' ? 'Please sign in to complete phone verification.' : 'You can now sign in.'}`, 'success');
+            
+            // Auto-fill and switch to sign in
+            setTimeout(() => {
+                document.getElementById('signInEmail').value = email;
+                document.getElementById('signInRole').value = role;
+                switchTab('signin');
+            }, 2000);
+        }
+
+        // Sign In Handler
+        function handleSignIn(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('signInEmail').value.trim().toLowerCase();
+            const password = document.getElementById('signInPassword').value;
+            const role = document.getElementById('signInRole').value;
+
+            const btn = document.getElementById('signInBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Signing in...';
+
+            setTimeout(() => {
+                let users = DB.getUsers();
+                const user = users.find(u => u.email === email && u.password === password);
+
+                if (!user) {
+                    showAlert('Invalid email or password', 'danger');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                    return;
+                }
+
+                if (user.role !== role) {
+                    showAlert(`This account is registered as a ${user.role}. Please select the correct account type.`, 'danger');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                    return;
+                }
+
+                // Admin requires OTP verification
+                if (role === 'admin') {
+                    initiateOTPVerification(user);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                } else {
+                    // Direct login for members
+                    completeLogin(user);
+                }
+            }, 800);
+        }
+
+        // OTP Functions
+        function initiateOTPVerification(user) {
+            state.pendingOTP = user;
+            
+            // Generate 6-digit OTP
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            const expiresAt = new Date(Date.now() + 5 * 60 * 1000).toISOString(); // 5 minutes
+
+            // Store OTP (in production, send via SMS API)
+            DB.saveOTP({
+                email: user.email,
+                otp: otp,
+                expiresAt: expiresAt,
+                attempts: 0
+            });
+
+            // Show OTP section
+            document.getElementById('signInForm').classList.add('hidden');
+            document.getElementById('otpSection').classList.remove('hidden');
+            document.getElementById('otpPhoneDisplay').textContent = maskPhone(user.phone);
+
+            // Simulate SMS sending (in production, integrate with Africa's Talking/Twilio)
+            console.log(`[SMS] OTP sent to ${user.phone}: ${otp}`);
+            showAlert(`Verification code sent to ${maskPhone(user.phone)}`, 'info');
+
+            // Setup OTP inputs
+            setupOTPInputs();
+            startResendCountdown();
+        }
+
+        function setupOTPInputs() {
+            const inputs = document.querySelectorAll('.otp-input');
+            inputs.forEach((input, index) => {
+                input.value = '';
+                input.oninput = function() {
+                    if (this.value.length === 1) {
+                        if (index < inputs.length - 1) {
+                            inputs[index + 1].focus();
+                        }
+                    }
+                    checkOTPComplete();
+                };
+                input.onkeydown = function(e) {
+                    if (e.key === 'Backspace' && !this.value && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                };
+            });
+            inputs[0].focus();
+        }
+
+        function checkOTPComplete() {
+            const inputs = document.querySelectorAll('.otp-input');
+            const otp = Array.from(inputs).map(i => i.value).join('');
+            if (otp.length === 6) {
+                document.getElementById('verifyOtpBtn').disabled = false;
+            } else {
+                document.getElementById('verifyOtpBtn').disabled = true;
+            }
+        }
+
+        function verifyOTP() {
+            const inputs = document.querySelectorAll('.otp-input');
+            const enteredOTP = Array.from(inputs).map(i => i.value).join('');
+            const storedOTP = DB.getOTP();
+
+            if (!storedOTP) {
+                showAlert('OTP expired. Please request a new one.', 'danger');
+                return;
+            }
+
+            // Check expiration
+            if (new Date() > new Date(storedOTP.expiresAt)) {
+                showAlert('OTP has expired. Please request a new one.', 'danger');
+                DB.saveOTP(null);
+                return;
+            }
+
+            // Check attempts
+            if (storedOTP.attempts >= 3) {
+                showAlert('Too many failed attempts. Please request a new OTP.', 'danger');
+                DB.saveOTP(null);
+                return;
+            }
+
+            if (enteredOTP === storedOTP.otp) {
+                // Success
+                DB.saveOTP(null);
+                completeLogin(state.pendingOTP);
+            } else {
+                // Failed attempt
+                storedOTP.attempts++;
+                DB.saveOTP(storedOTP);
+                showAlert(`Invalid OTP. ${3 - storedOTP.attempts} attempts remaining.`, 'danger');
+                
+                // Clear inputs
+                document.querySelectorAll('.otp-input').forEach(i => i.value = '');
+                document.querySelectorAll('.otp-input')[0].focus();
+            }
+        }
+
+        function resendOTP() {
+            if (!state.pendingOTP) return;
+            initiateOTPVerification(state.pendingOTP);
+        }
+
+        function startResendCountdown() {
+            const btn = document.getElementById('resendBtn');
+            const countdown = document.getElementById('countdown');
+            let seconds = 30;
+
+            btn.disabled = true;
+            countdown.classList.remove('hidden');
+            
+            const interval = setInterval(() => {
+                seconds--;
+                countdown.textContent = `(${seconds}s)`;
+                
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    btn.disabled = false;
+                    countdown.classList.add('hidden');
+                }
+            }, 1000);
+        }
+
+        function cancelOTP() {
+            state.pendingOTP = null;
+            DB.saveOTP(null);
+            document.getElementById('otpSection').classList.add('hidden');
+            document.getElementById('signInForm').classList.remove('hidden');
+            document.getElementById('signInPassword').value = '';
+        }
+
+        function maskPhone(phone) {
+            if (!phone) return 'registered phone';
+            return phone.substring(0, 5) + '***' + phone.substring(phone.length - 3);
+        }
+
+        // Complete Login
+        function completeLogin(user) {
+            state.currentUser = user;
+            localStorage.setItem('agripride_session', JSON.stringify({
+                ...user,
+                password: undefined // Don't store password in session
+            }));
+            
+            addAuditLog('AUTH', `${user.role === 'admin' ? 'Admin' : 'Member'} logged in: ${user.email}`);
+
+            if (user.role === 'admin') {
+                showAdminPortal();
+            } else {
+                showUserPortal();
+            }
+        }
+
+        function checkSession() {
+            const saved = localStorage.getItem('agripride_session');
+            if (saved) {
+                state.currentUser = JSON.parse(saved);
+                if (state.currentUser.role === 'user') {
+                    showUserPortal();
+                } else if (state.currentUser.role === 'admin') {
+                    showAdminPortal();
+                }
+            }
+        }
+
+        function logout() {
+            addAuditLog('AUTH', `${state.currentUser?.role === 'admin' ? 'Admin' : 'Member'} logged out: ${state.currentUser?.email}`);
+            localStorage.removeItem('agripride_session');
+            state.currentUser = null;
+            state.pendingOTP = null;
+            
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('userPortal').classList.remove('active');
+            document.getElementById('adminPortal').classList.remove('active');
+            
+            document.getElementById('signInForm').reset();
+            document.getElementById('signUpForm').reset();
+            document.getElementById('otpSection').classList.add('hidden');
+            document.getElementById('signInForm').classList.remove('hidden');
+            
+            switchTab('signin');
+        }
+
+        // ==================== USER PORTAL FUNCTIONS ====================
+
+        function showUserPortal() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('userPortal').classList.add('active');
+            document.getElementById('adminPortal').classList.remove('active');
+            
+            document.getElementById('userName').textContent = state.currentUser.name;
+            document.getElementById('userAvatar').textContent = getInitials(state.currentUser.name);
+            
+            // Pre-fill form with user data
+            document.getElementById('appName').value = state.currentUser.name || '';
+            document.getElementById('appPhone').value = state.currentUser.phone || '';
+            document.getElementById('appEmail').value = state.currentUser.email || '';
+            
+            loadApplicationHistory();
+        }
+
+        function showAdminPortal() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('adminPortal').classList.add('active');
+            document.getElementById('userPortal').classList.remove('active');
+            
+            document.getElementById('adminName').textContent = state.currentUser.name;
+            document.getElementById('adminAvatar').textContent = 'AD';
+            
+            initAdminDashboard();
+        }
+
+        function getInitials(name) {
+            if (!name) return 'U';
+            return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        // ==================== LOAN APPLICATION FUNCTIONS ====================
+
+        function submitLoanApplication(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitAppBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Submitting...';
+
+            const application = {
+                id: 'APP-' + Date.now(),
+                submittedAt: new Date().toISOString(),
+                status: 'pending',
+                applicant: {
+                    name: document.getElementById('appName').value,
+                    phone: document.getElementById('appPhone').value,
+                    email: document.getElementById('appEmail').value,
+                    idNumber: document.getElementById('appIdNumber').value,
+                    district: document.getElementById('appDistrict').value,
+                    occupation: document.getElementById('appOccupation').value,
+                    age: parseInt(document.getElementById('appAge').value),
+                    dependentsTotal: parseInt(document.getElementById('appDependents').value),
+                    dependentsUnder5: parseInt(document.getElementById('appDependentsUnder5').value),
+                    harvestMonths: document.getElementById('appHarvestMonths').value
+                },
+                loan: {
+                    amount: parseInt(document.getElementById('appAmount').value),
+                    purpose: document.getElementById('appPurpose').value,
+                    additionalInfo: document.getElementById('appAdditional').value
+                },
+                riskFlags: [],
+                processingStage: 'scout'
+            };
+
+            // Process through GUARD system
+            setTimeout(() => {
+                processApplication(application);
+                
+                state.applications.push(application);
+                DB.saveApps(state.applications);
+                
+                showApplicationStatus('success', application.id);
+                document.getElementById('loanApplicationForm').reset();
+                
+                // Re-fill user info
+                document.getElementById('appName').value = state.currentUser.name || '';
+                document.getElementById('appPhone').value = state.currentUser.phone || '';
+                document.getElementById('appEmail').value = state.currentUser.email || '';
+                
+                loadApplicationHistory();
+                addAuditLog('APPLICATION', `New application submitted: ${application.id}`);
+                
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+            }, 1000);
+        }
+
+        function processApplication(app) {
+            // Scout Agent Processing
+            addAuditLog('SCOUT', `Processing ${app.id} - Financial literacy check`);
+            logToConsole('scoutConsole', 'trail', `Application ${app.id} received`);
+            
+            // Check for stress signals
+            if (app.loan.additionalInfo.toLowerCase().includes('loan shark')) {
+                app.riskFlags.push('stress_signal');
+                addAuditLog('SCOUT', `Stress signal detected in ${app.id}`, 'danger');
+                logToConsole('scoutConsole', 'danger', 'ALERT: Loan shark mention detected');
+            }
+
+            // Guardian Agent Processing (delayed simulation)
+            setTimeout(() => guardianTriage(app), 1500);
+        }
+
+        function guardianTriage(app) {
+            app.processingStage = 'guardian';
+            addAuditLog('GUARDIAN', `Triage started for ${app.id}`);
+            logToConsole('guardianConsole', 'rank', `Evaluating KES ${app.loan.amount.toLocaleString()}`);
+
+            let escalate = false;
+            let reasons = [];
+
+            // RANK-N: Escalation triggers
+            if (app.loan.amount > 15000) {
+                escalate = true;
+                reasons.push('Amount > KES 15,000');
+                logToConsole('guardianConsole', 'danger', `Amount ${app.loan.amount} exceeds auto-approve limit`);
+            }
+
+            if (app.applicant.dependentsUnder5 >= 2) {
+                escalate = true;
+                reasons.push('2+ dependents under 5 years');
+            }
+
+            if (app.loan.additionalInfo.toLowerCase().includes('debt collector')) {
+                escalate = true;
+                reasons.push('Mentions debt collector');
+            }
+
+            // RANK-A: Auto-approve ≤ 15,000
+            if (app.loan.amount <= 15000 && !escalate && app.riskFlags.length < 3) {
+                app.status = 'approved';
+                app.decision = 'auto_approved';
+                app.decidedBy = 'Guardian Agent';
+                app.decidedAt = new Date().toISOString();
+                
+                addAuditLog('GUARDIAN', `${app.id} AUTO-APPROVED for KES ${app.loan.amount}`);
+                logToConsole('guardianConsole', 'compliance', `✅ AUTO-APPROVED: KES ${app.loan.amount.toLocaleString()}`);
+                
+            } else if (app.riskFlags.length >= 3 && !escalate) {
+                app.status = 'rejected';
+                app.decision = 'denied';
+                app.decisionReason = 'High risk profile (3+ flags)';
+                
+                addAuditLog('GUARDIAN', `${app.id} DENIED - High risk`, 'danger');
+                logToConsole('guardianConsole', 'danger', `❌ DENIED: 3+ risk flags`);
+                
+            } else if (escalate) {
+                hunterEscalate(app, reasons);
+            }
+
+            DB.saveApps(state.applications);
+            updateApplicationHistory();
+        }
+
+        function hunterEscalate(app, reasons) {
+            app.processingStage = 'hunter';
+            app.status = 'review';
+            app.escalationReasons = reasons;
+            
+            addAuditLog('HUNTER', `${app.id} escalated to human officer`, 'warning');
+            logToConsole('hunterConsole', 'rank', `🚨 ESCALATION: ${reasons.join(', ')}`);
+            
+            // Prepare briefing
+            const briefing = `
+Applicant: ${app.applicant.name}, ${app.applicant.age}
+Occupation: ${app.applicant.occupation} (${app.applicant.district})
+Income peaks: ${app.applicant.harvestMonths || 'N/A'}
+Dependents: ${app.applicant.dependentsTotal} children
+Request: KES ${app.loan.amount.toLocaleString()} for ${app.loan.purpose}
+Risk flags: ${app.riskFlags.length > 0 ? app.riskFlags.join(', ') : 'None'}
+Escalation: ${reasons.join(', ')}
+
+⚠️ ACTION REQUIRED: Review within 15 mins
+RANK-A: NEVER approve/deny via AI
+            `.trim();
+
+            logToConsole('hunterConsole', 'danger', 'BRIEFING PREPARED:\n' + briefing);
+            
+            // Simulate officer notification
+            setTimeout(() => {
+                addAuditLog('HUNTER', `Officer notified for ${app.id} (15-min SLA started)`);
+            }, 500);
+
+            DB.saveApps(state.applications);
+        }
+
+        function showApplicationStatus(type, appId) {
+            const container = document.getElementById('applicationStatus');
+            if (type === 'success') {
+                container.innerHTML = `
+                    <div class="alert-box alert-box-success">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Application Submitted Successfully!</strong><br>
+                            Reference: ${appId}<br>
+                            You will receive updates via SMS.
+                        </div>
+                    </div>
+                `;
+            }
+            setTimeout(() => container.innerHTML = '', 5000);
+        }
+
+        function loadApplicationHistory() {
+            const userApps = state.applications.filter(app => 
+                app.applicant.email === state.currentUser.email
+            );
+            
+            const container = document.getElementById('applicationHistory');
+            
+            if (userApps.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px;">No applications yet</p>';
+                return;
+            }
+
+            container.innerHTML = userApps.map(app => `
+                <div style="padding: 15px; border-bottom: 1px solid var(--border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <strong>${app.id}</strong>
+                        <span class="status-badge status-${app.status}">${app.status.toUpperCase()}</span>
+                    </div>
+                    <div style="font-size: 14px; color: var(--text-light);">
+                        Amount: KES ${app.loan.amount.toLocaleString()} | 
+                        Purpose: ${app.loan.purpose} | 
+                        Submitted: ${new Date(app.submittedAt).toLocaleDateString()}
+                    </div>
+                    ${app.decision ? `
+                        <div style="margin-top: 8px; font-size: 13px; color: var(--success);">
+                            <i class="fas fa-info-circle"></i> ${app.decision === 'auto_approved' ? 'Auto-approved by Guardian Agent' : app.decision}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function updateApplicationHistory() {
+            if (state.currentUser && state.currentUser.role === 'user') {
+                loadApplicationHistory();
+            }
+        }
+
+        // ==================== ADMIN PORTAL FUNCTIONS ====================
+
+        function showAdminSection(section, element) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.add('hidden'));
+            
+            // Show selected section
+            document.getElementById('admin' + section.charAt(0).toUpperCase() + section.slice(1)).classList.remove('hidden');
+            
+            // Update nav
+            document.querySelectorAll('.admin-nav-item').forEach(item => item.classList.remove('active'));
+            if (element) element.classList.add('active');
+
+            // Load section-specific data
+            if (section === 'applications') {
+                loadAllApplications();
+            } else if (section === 'audit') {
+                loadAuditTrail();
+            }
+        }
+
+        function initAdminDashboard() {
+            updateStats();
+            initChart();
+            loadRecentActivity();
+        }
+
+        function updateStats() {
+            const total = state.applications.length;
+            const pending = state.applications.filter(a => a.status === 'pending').length;
+            const approved = state.applications.filter(a => a.status === 'approved').length;
+            const totalDisbursed = state.applications
+                .filter(a => a.status === 'approved')
+                .reduce((sum, a) => sum + a.loan.amount, 0);
+
+            document.getElementById('statTotalApps').textContent = total;
+            document.getElementById('statPending').textContent = pending;
+            document.getElementById('statApproved').textContent = approved;
+            document.getElementById('statDisbursed').textContent = 'KES ' + totalDisbursed.toLocaleString();
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('pipelineChart').getContext('2d');
+            
+            // Count applications by stage
+            const stages = {
+                'Submitted': state.applications.filter(a => a.processingStage === 'scout').length,
+                'Guardian': state.applications.filter(a => a.processingStage === 'guardian').length,
+                'Auto-Approved': state.applications.filter(a => a.decision === 'auto_approved').length,
+                'Hunter Review': state.applications.filter(a => a.processingStage === 'hunter').length,
+                'Approved': state.applications.filter(a => a.status === 'approved').length
+            };
+
+            if (window.pipelineChart) {
+                window.pipelineChart.destroy();
+            }
+
+            window.pipelineChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(stages),
+                    datasets: [{
+                        label: 'Applications',
+                        data: Object.values(stages),
+                        backgroundColor: [
+                            '#2f855a',
+                            '#3182ce',
+                            '#9f7aea',
+                            '#e53e3e',
+                            '#38a169'
+                        ],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function loadAllApplications() {
+            const container = document.getElementById('allApplications');
+            
+            if (state.applications.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 20px;">No applications yet</p>';
+                return;
+            }
+
+            container.innerHTML = state.applications.map(app => `
+                <div style="padding: 15px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                        <div>
+                            <strong>${app.id}</strong> - ${app.applicant.name}
+                            <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
+                                ${app.applicant.district} | ${app.applicant.occupation}
+                            </div>
+                        </div>
+                        <span class="status-badge status-${app.status}">${app.status.toUpperCase()}</span>
+                    </div>
+                    <div style="font-size: 14px; margin-bottom: 8px;">
+                        <strong>Amount:</strong> KES ${app.loan.amount.toLocaleString()} | 
+                        <strong>Purpose:</strong> ${app.loan.purpose}
+                    </div>
+                    ${app.processingStage === 'hunter' ? `
+                        <div style="background: #fffaf0; padding: 10px; border-radius: 6px; margin-top: 8px; font-size: 13px;">
+                            <strong>Escalation Reasons:</strong> ${app.escalationReasons?.join(', ') || 'N/A'}
+                        </div>
+                    ` : ''}
+                    ${app.decision ? `
+                        <div style="margin-top: 8px; font-size: 13px; color: var(--success);">
+                            <i class="fas fa-check-circle"></i> ${app.decision} by ${app.decidedBy || 'System'}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function loadRecentActivity() {
+            const feed = document.getElementById('adminActivityFeed');
+            const recentLogs = state.auditLogs.slice(-10).reverse();
+            
+            if (recentLogs.length === 0) {
+                feed.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 20px;">No recent activity</p>';
+                return;
+            }
+
+            feed.innerHTML = recentLogs.map(log => {
+                let iconClass = 'info';
+                let icon = 'info-circle';
+                
+                if (log.type === 'GUARDIAN' && log.message.includes('APPROVED')) {
+                    iconClass = 'success';
+                    icon = 'check';
+                } else if (log.type === 'HUNTER') {
+                    iconClass = 'warning';
+                    icon = 'exclamation-triangle';
+                } else if (log.type === 'SCOUT') {
+                    iconClass = 'info';
+                    icon = 'graduation-cap';
+                }
+
+                return `
+                    <div class="activity-item">
+                        <div class="activity-icon ${iconClass}">
+                            <i class="fas fa-${icon}"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">${log.message}</div>
+                            <div class="activity-meta">${log.type} • ${new Date(log.timestamp).toLocaleString()}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadAuditTrail() {
+            const console = document.getElementById('auditConsole');
+            const logs = state.auditLogs.slice().reverse();
+            
+            logs.forEach(log => {
+                let type = 'compliance';
+                if (log.type === 'GUARDIAN' || log.type === 'HUNTER') type = 'rank';
+                if (log.type === 'SCOUT') type = 'trail';
+                
+                logToConsole('auditConsole', type, `[${new Date(log.timestamp).toLocaleString()}] ${log.type}: ${log.message}`);
+            });
+        }
+
+        function triggerCycle() {
+            const output = document.getElementById('cycleOutput');
+            output.innerHTML = '<div class="alert-box alert-box-info"><i class="fas fa-spinner fa-spin"></i> Running CYCLE analysis...</div>';
+
+            setTimeout(() => {
+                const analysis = `
+                    <div class="alert-box alert-box-info" style="margin-bottom: 15px;">
+                        <strong>CYCLE-1:</strong> Comparing actual vs expected outcomes<br>
+                        <span style="font-size: 13px; color: var(--text-light);">
+                            Analyzing ${state.applications.length} applications...
+                        </span>
+                    </div>
+                    <div class="alert-box" style="background: #c6f6d5; color: #22543d; margin-bottom: 15px;">
+                        <strong>CYCLE-2:</strong> Insight Generated<br>
+                        <span style="font-size: 13px;">
+                            ${state.applications.filter(a => a.processingStage === 'hunter').length} escalations detected. 
+                            Possible school-fee timing mismatch with harvest cycle?
+                        </span>
+                    </div>
+                    <div class="alert-box" style="background: #fef5e7; color: #744210; margin-bottom: 15px;">
+                        <strong>CYCLE-3:</strong> Course-Correction Proposed<br>
+                        <span style="font-size: 13px;">
+                            Update Scout Agent to proactively educate on harvest-cycle planning for school fees in November
+                        </span>
+                    </div>
+                    <div class="alert-box" style="background: #1a202c; color: #48bb78; margin-bottom: 15px;">
+                        <strong>CYCLE-4:</strong> Slack Approval Required<br>
+                        <code style="display: block; margin-top: 8px; padding: 8px; background: #2d3748; border-radius: 4px;">
+                            /approve-cycle-${new Date().toISOString().split('T')[0]}
+                        </code>
+                    </div>
+                `;
+                
+                output.innerHTML = analysis;
+                addAuditLog('CYCLE', 'CYCLE-4 analysis completed. Slack approval pending.');
+            }, 2000);
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
+
+        function addAuditLog(type, message) {
+            const log = {
+                timestamp: new Date().toISOString(),
+                type: type,
+                message: message
+            };
+            
+            state.auditLogs.push(log);
+            DB.saveLogs(state.auditLogs);
+            
+            // Update activity feed if on admin dashboard
+            if (!document.getElementById('adminDashboard').classList.contains('hidden')) {
+                loadRecentActivity();
+            }
+        }
+
+        function logToConsole(consoleId, type, message) {
+            const console = document.getElementById(consoleId);
+            const line = document.createElement('div');
+            line.className = `console-line ${type}`;
+            
+            let badge = '';
+            if (type === 'compliance') badge = '<span class="badge badge-dpa">DPA 2022</span><span class="badge badge-aws">AWS Africa</span>';
+            if (type === 'rank') badge = '<span class="badge badge-rank">RANK</span>';
+            if (type === 'trail') badge = '<span class="badge badge-rank">TRAIL</span>';
+            
+            line.innerHTML = `${badge}${message.replace(/\n/g, '<br>')}`;
+            console.appendChild(line);
+            console.scrollTop = console.scrollHeight;
+        }
+
+        // ==================== INITIALIZATION ====================
+
+        window.onload = function() {
+            checkSession();
+            console.log('[AgriPride] System initialized - GUARD Safety Rails active');
+        };
+
+        // Handle Enter key in forms
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && e.target.classList.contains('otp-input')) {
+                const inputs = document.querySelectorAll('.otp-input');
+                const index = parseInt(e.target.dataset.index);
+                if (index < inputs.length - 1 && e.target.value.length === 1) {
+                    inputs[index + 1].focus();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
